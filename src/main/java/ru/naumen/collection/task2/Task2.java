@@ -1,5 +1,7 @@
 package ru.naumen.collection.task2;
 
+import java.util.*;
+
 /**
  * Дано:
  * <pre>
@@ -24,5 +26,86 @@ package ru.naumen.collection.task2;
  */
 public class Task2 {
 
-    // TODO
+    /**
+     * Сложность выполнения программы O(n), т.к. scanTicket использует HashMap, который позволяет обращаться к каждому
+     * элементу за O(1)
+     */
+
+    /**
+     * Онлайн заказы
+     */
+    private final Map<Ticket, LUNCH> orders = new HashMap<>();
+
+    /**
+     * Тестовые билеты
+     */
+    private final List<Ticket> testTickets = List.of(
+            new Ticket(1L, "eugene"),
+            new Ticket(2L, "boris"),
+            new Ticket(3L, "vasya")
+    );
+
+    /**
+     * Сложность выполнения программы O(n), где n - колличество билетов, т.к. scanTicket использует HashMap,
+     * который позволяет обращаться к каждому элементу за O(1)
+     */
+    public static void main(String[] args) {
+        Task2 task2 = new Task2();
+        task2.initOrders();
+        task2.processOrders();
+    }
+
+    /**
+     * Проициниализировать заказы с тестовыми билетами и тестовыми заказами
+     */
+    private void initOrders() {
+        testTickets.forEach(ticket -> addOrder(ticket, LUNCH.randomLunch()));
+    }
+
+    /**
+     * Выдать заказы всем клиентам
+     */
+    private void processOrders() {
+        testTickets.forEach(this::scanTicket);
+    }
+
+    /**
+     * Добавить заказ в список заказов
+     * @param ticket билет, которому нужно выдать заказ
+     * @param lunch заказанный комбо-обед
+     */
+    private void addOrder(Ticket ticket, LUNCH lunch) {
+        orders.put(ticket, lunch);
+    }
+
+    /**
+     * Обработать билет и выдать комбо-обед
+     */
+    private void scanTicket(Ticket ticket) {
+        LUNCH clientLunch = orders.get(ticket);
+        System.out.printf("User with id: %s get lunch: %s%n", ticket.getId(), clientLunch);
+    }
+
+    /**
+     * Комбо обед
+     */
+    private enum LUNCH {
+        /**
+         * Нет товаров
+         */
+        NOTHING,
+        /**
+         * Напитки
+         */
+        DRINK,
+        /**
+         * Еда и напитки
+         */
+        DRINK_AND_EAT;
+
+        public static LUNCH randomLunch()  {
+            return values()[new Random().nextInt(values().length)];
+        }
+    }
+
 }
