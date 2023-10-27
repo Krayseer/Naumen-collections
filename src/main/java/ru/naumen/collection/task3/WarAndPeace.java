@@ -27,9 +27,9 @@ public class WarAndPeace {
      */
     public static void main(String[] args) {
         WordParser wordParser = new WordParser(WAR_AND_PEACE_FILE_PATH);
-        Map<String, Long> wordCounts = new HashMap<>();
-        PriorityQueue<Map.Entry<String, Long>> topWords = new PriorityQueue<>(Comparator.comparingLong(Map.Entry::getValue));
-        PriorityQueue<Map.Entry<String, Long>> lastWords = new PriorityQueue<>((a, b) -> Long.compare(b.getValue(), a.getValue()));
+        Map<String, Long> wordCounts = new LinkedHashMap<>();
+        Queue<Map.Entry<String, Long>> topWords = new PriorityQueue<>(Comparator.comparingLong(Map.Entry::getValue));
+        Queue<Map.Entry<String, Long>> lastWords = new PriorityQueue<>((a, b) -> Long.compare(b.getValue(), a.getValue()));
         int N = 10;
 
         wordParser.forEachWord(word -> wordCounts.put(word, wordCounts.getOrDefault(word, 0L) + 1L));
