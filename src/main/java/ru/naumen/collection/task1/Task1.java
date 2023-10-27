@@ -39,8 +39,8 @@ public class Task1 {
     public static List<User> findDuplicates(Collection<User> collA, Collection<User> collB) {
         List<User> duplicateUsers = new ArrayList<>();
         Set<User> setCollA = new HashSet<>(collA);
-        for (User user : setCollA) {
-            if (collB.contains(user)) {
+        for (User user : collB) {
+            if (setCollA.contains(user)) {
                 duplicateUsers.add(user);
             }
         }
